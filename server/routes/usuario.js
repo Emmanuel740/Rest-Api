@@ -5,16 +5,16 @@ const { verificaToken } = require('../middlewares/autentificacion');
 const Usuario = require('../models/usuario'); //subir nivel
 const app = express();
 
-app.get('/usuario/:desde/:limite', (req, res) => {
-    let desde = req.params.desde || 0;
+app.get('/usuario', (req, res) => {
+    /*let desde = req.params.desde || 0;
     desde = Number(desde); //forzar que el dato siempre sea numerico
     let limite = req.params.limite || 0;
-    limite = Number(limite);
+    limite = Number(limite);*/
 
     Usuario.find({ estado: true }) //select * from usuario where estado=true
         //solo aceptan valores numericos
-        .skip(desde)
-        .limit(limite)
+        //.skip(desde)
+        //.limit(limite)
         .exec((err, usuarios) => { //ejecuta la funcion
             if (err) {
                 return res.status(400).json({
@@ -35,9 +35,10 @@ app.post('/usuario', (req, res) => {
     let usuario = new Usuario({
         //para poder mandar los datos a la coleccion
         nombre: body.nombre,
-        email: body.email,
+        apellidos: body.apellidos,
+        matricula: body.matricula,
         password: bcrypt.hashSync(body.password, 10), //numero de veces de encriptar
-        img: body.img
+        puesto: body.puesto
     });
 
     usuario.save((err, usrDB) => {
@@ -56,7 +57,7 @@ app.post('/usuario', (req, res) => {
 
 app.put('/usuario/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['nombre', 'estado', 'role', 'img']); //FILTRAR del body, on el pick seleccionar los campos que interesan del body 
+    let body = _.pick(req.body, ['nombre', 'apellidos', 'estado', 'role', 'matricula']); //FILTRAR del body, on el pick seleccionar los campos que interesan del body 
     //id 'su coleccion, new -> si no existe lo inserta, runVali-> sirve para validar todas las condiciones del modelo 
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, usrDB) => {
         if (err) {

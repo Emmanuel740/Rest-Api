@@ -8,7 +8,7 @@ const app = express();
 app.post('/login', (req, res) => {
     let body = req.body;
 
-    Usuario.findOne({ email: body.email }, (err, usrDB) => {
+    Usuario.findOne({ matricula: body.matricula }, (err, usrDB) => {
 
         if (err) {
             return res.status(400).json({
@@ -21,7 +21,7 @@ app.post('/login', (req, res) => {
             return res.status(400).json({
                 ok: false,
                 err: {
-                    message: 'Usuario y/o contraseña incorrecta'
+                    message: '*Usuario y/o contraseña incorrecta'
                 }
             });
         }

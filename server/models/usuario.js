@@ -9,10 +9,14 @@ let usuarioSchema = new Schema({
         type: String,
         required: [true, 'Por favor ingresa el nombre del usuario']
     },
-    email: {
+    apellidos: {
         type: String,
+        required: [true, 'Por favor ingrese sus Apellidos']
+    },
+    matricula: {
+        type: Number,
         unique: true,
-        required: [true, 'Por favor ingresa el email']
+        required: [true, 'Por favor ingresa su Matricula']
     },
     password: {
         type: String,
@@ -22,9 +26,9 @@ let usuarioSchema = new Schema({
         type: String,
         default: 'USER_ROLE',
     },
-    img: {
+    puesto: {
         type: String,
-        required: [true, 'Por favor ingresa la imagen']
+        required: [true, 'Por favor ingresa Su puesto']
     },
     estado: {
         type: Boolean,
